@@ -67,7 +67,7 @@ export class TrendyolClient {
   }
 
   getFinancialTransactions(query = {}) {
-    return this.request(`/integration/finance/che/sellers/${this.supplierId}/transactions`, { query });
+    return this.request(`/integration/finance/che/sellers/${this.supplierId}/settlements`, { query });
   }
 }
 
