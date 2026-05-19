@@ -39,6 +39,36 @@ const server = http.createServer(async (request, response) => {
       return sendJson(response, 200, data);
     }
 
+    if (request.method === "GET" && url.pathname === "/commissions") {
+      const now = Date.now();
+      const query = {
+        transactionType: "Sale",
+        startDate: now - 30 * 24 * 60 * 60 * 1000,
+        endDate: now,
+        page: 0,
+        size: 50,
+        ...Object.fromEntries(url.searchParams)
+      };
+      const data = await client.getFinancialTransactions(query);
+      const items = (data?.content || []).map((item) => ({
+        orderNumber: item.orderNumber,
+        barcode: item.barcode,
+        transactionDate: item.transactionDate,
+        commissionRate: item.commissionRate,
+        commissionAmount: item.commissionAmount,
+        saleAmount: item.credit,
+        sellerRevenue: item.sellerRevenue
+      }));
+
+      return sendJson(response, 200, {
+        page: data?.page,
+        size: data?.size,
+        totalPages: data?.totalPages,
+        totalElements: data?.totalElements,
+        items
+      });
+    }
+
     if (request.method === "POST" && url.pathname === "/price-and-inventory") {
       const payload = await readJson(request);
       const data = await client.updatePriceAndInventory(payload.items || []);

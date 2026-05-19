@@ -69,6 +69,20 @@ Trendyol dokumanina gore tarih araligi kullanilirsa `startDate` ve `endDate` tim
 GET /brands?name=adidas
 ```
 
+### Komisyonlari listele
+
+Son 30 gundeki satis kayitlarinda uygulanan komisyon oranlarini ve tutarlarini listeler.
+
+```http
+GET /commissions
+```
+
+Tarih araligi vermek icin timestamp millisecond kullanin:
+
+```http
+GET /commissions?startDate=1735689600000&endDate=1738368000000&page=0&size=50
+```
+
 ### Stok ve fiyat guncelle
 
 ```http

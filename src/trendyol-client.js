@@ -65,6 +65,10 @@ export class TrendyolClient {
   getBrands(query = {}) {
     return this.request("/integration/product/brands", { query });
   }
+
+  getFinancialTransactions(query = {}) {
+    return this.request(`/integration/finance/che/sellers/${this.supplierId}/transactions`, { query });
+  }
 }
 
 export class TrendyolError extends Error {
